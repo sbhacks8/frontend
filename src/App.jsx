@@ -1,45 +1,48 @@
-import { useState } from 'react'
-import logo from './logo.svg'
-import './App.css'
+import * as THREE from "three";
+import React, {
+  Suspense,
+  useEffect,
+  useState,
+  useRef,
+  forwardRef,
+} from "react";
+import { Canvas, useFrame } from "@react-three/fiber";
+import {
+  Reflector,
+  Text,
+  useTexture,
+  OrbitControls,
+  useGLTF,
+  Stars,
+} from "@react-three/drei";
+import "./App.css";
 
-function App() {
-  const [count, setCount] = useState(0)
-
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>Hello Vite + React!</p>
-        <p>
-          <button type="button" onClick={() => setCount((count) => count + 1)}>
-            count is: {count}
-          </button>
-        </p>
-        <p>
-          Edit <code>App.jsx</code> and save to test HMR updates.
-        </p>
-        <p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-          {' | '}
-          <a
-            className="App-link"
-            href="https://vitejs.dev/guide/features.html"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Vite Docs
-          </a>
-        </p>
-      </header>
-    </div>
-  )
+function Earth(props) {
+  const { scene } = useGLTF("earth.glb");
+  return <primitive object={scene} {...props} />;
 }
 
-export default App
+export default function App() {
+  return (
+    <>
+      <Canvas
+        concurrent
+        gl={{ alpha: false }}
+        pixelRatio={[1, 1.5]}
+        camera={{ position: [0, 3, 100], fov: 15 }}
+      >
+        <OrbitControls />
+        <Stars />
+        <Suspense fallback={null}>
+          <Earth
+            rotation={[0, Math.PI - 0.4, 0]}
+            position={[-1.2, 0, 0.6]}
+            scale={[0.26, 0.26, 0.26]}
+          />
+          
+          <directionalLight position={[-20, 0, -10]} intensity={0.7} />
+        </Suspense>
+      </Canvas>
+    </>
+  );
+}
