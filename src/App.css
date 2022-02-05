@@ -16,6 +16,13 @@ body,
   overflow: hidden;
 }
 
+body {
+  font-family: "Raleway", sans-serif;
+  color: white;
+  background: #101010;
+  user-select: none;
+}
+
 button {
   font-size: calc(10px + 2vmin);
 }
