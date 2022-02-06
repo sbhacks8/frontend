@@ -19,8 +19,9 @@ const Room = ({ roomName, room, handleLogout }) => {
     room.on("participantDisconnected", participantDisconnected);
     room.participants.forEach(participantConnected);
     return () => {
-      room.off("participantConnected", participantConnected);
-      room.off("participantDisconnected", participantDisconnected);
+      // console.log(room);
+      // room.off("participantConnected", participantConnected);
+      // room.off("participantDisconnected", participantDisconnected);
     };
   }, [room]);
 

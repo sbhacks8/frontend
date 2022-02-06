@@ -1,10 +1,9 @@
-// import * as THREE from "three";
+import * as THREE from "three";
 import React, { Suspense, useEffect, useState, useRef } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { Html, useGLTF } from "@react-three/drei";
-// import "./App.css";
+import OverlayStart from "./components/OverlayStart";
 import VideoChat from "./components/Videochat";
-import { Vector3 } from "three";
 
 function LivingRoom(props) {
   const { scene } = useGLTF("livingroom.glb");
@@ -44,12 +43,13 @@ export default function VideoLivingRoom() {
           <Intro start={ready && clicked} set={setReady} />
         </Suspense>
       </Canvas>
+      <OverlayStart {...store} videoPlayer={ref} />
     </>
   );
 }
 
 function Intro({ start, set }) {
-  const [vec] = useState(() => new Vector3());
+  const [vec] = useState(() => new THREE.Vector3());
   useEffect(() => setTimeout(() => set(true), 500), []);
   return useFrame((state) => {
     if (start) {

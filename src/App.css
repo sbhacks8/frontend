@@ -32,6 +32,30 @@ body,
   border: none !important;
   margin-top: -6px !important;
 }
+
+.fullscreen {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 1s;
+}
+
+.bg {
+  background: #101010;
+}
+
+.fullscreen.notready {
+  color: #606060;
+}
+.fullscreen > div{
+  color: white;
+  font-weight: 300;
+}
 .overlay {
   top: 0;
   left: 0;
@@ -54,7 +78,7 @@ body,
 }
 
 .card {
-  background: rgba(10, 10, 10, .05);
+  background: rgba(10, 10, 10, 0.05);
   padding: 1px 20px 32px 0px;
   margin-top: 20px;
   border-radius: 2%;
@@ -63,11 +87,10 @@ body,
   margin-top: 15px;
   text-align: center;
   pointer-events: all;
-  transition: all .5s ease-in-out;
+  transition: all 0.5s ease-in-out;
 }
 .join:hover {
-  color: #D8BE99;
-  
+  color: #d8be99;
 }
 body {
   font-family: "Raleway", sans-serif;
