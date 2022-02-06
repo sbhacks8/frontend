@@ -2,6 +2,8 @@ import React, { Suspense, useState } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { OrbitControls, useGLTF, Stars } from "@react-three/drei";
 import "./App.css";
+import Trajectory from "./components/Trajectory.jsx";
+import { norm } from "./utils";
 
 const PERIOD = 100;
 
@@ -44,9 +46,7 @@ function Light() {
   const a = [-20, 30, 0];
   const b = [0, 0, -20];
   let planeVector = math.cross(a, b);
-  planeVector = planeVector.map((v) => {
-    return v / math.norm(planeVector);
-  });
+  norm(planeVector);
   useFrame(({ clock }) => {
     let newPos = rodrigues(theta(clock.getElapsedTime(), 100), a, planeVector);
 
@@ -68,7 +68,8 @@ export default function App() {
         gl={{ alpha: false }}
         camera={{ position: [0, 0, 100], fov: 15 }}
       >
-        {/* <OrbitControls /> */}
+        <OrbitControls />
+        <Trajectory />
         <Stars />
         <Suspense fallback={null}>
           <Earth />
