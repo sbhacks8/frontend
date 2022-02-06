@@ -23,7 +23,9 @@ body,
   margin-top: 70vh;
   margin-left: 10px;
 }
-.rc-slider-rail, .rc-slider-step, .rc-slider-track {
+.rc-slider-rail,
+.rc-slider-step,
+.rc-slider-track {
   height: 1px !important;
 }
 .rc-slider-handle {
@@ -33,6 +35,7 @@ body,
 .overlay {
   top: 0;
   left: 0;
+  pointer-events: none;
   position: absolute;
   margin-top: 20px;
   margin-left: 20px;
@@ -50,6 +53,22 @@ body,
   overflow: auto;
 }
 
+.card {
+  background: rgba(10, 10, 10, .05);
+  padding: 1px 20px 32px 0px;
+  margin-top: 20px;
+  border-radius: 2%;
+}
+.join {
+  margin-top: 15px;
+  text-align: center;
+  pointer-events: all;
+  transition: all .5s ease-in-out;
+}
+.join:hover {
+  color: #D8BE99;
+  
+}
 body {
   font-family: "Raleway", sans-serif;
   color: white;

@@ -33,11 +33,23 @@ export default function Trajectory(props) {
         description: "Daily time with my wife",
       },
       {
-        time: 20 * 60 * 60, // this is in delta from now for the purposes of demo, should be unix time FROM UCT/GMT
+        time: 7 * 60 * 60, // this is in delta from now for the purposes of demo, should be unix time FROM UCT/GMT
         person: "David",
         link: "https://lol",
         description: "Catching up with an old friend",
       },
+      {
+        time: -4 * 60 * 60, // this is in delta from now for the purposes of demo, should be unix time FROM UCT/GMT
+        person: "Frank",
+        link: "https://lol",
+        description: "Meeting with Houston",
+      },
+      // {
+      //   time: 3.5 * 60 * 60, // this is in delta from now for the purposes of demo, should be unix time FROM UCT/GMT
+      //   person: "hala",
+      //   link: "https://lol",
+      //   description: "Daily time with my wife",
+      // },
     ],
   };
   localStorage.setItem("backendInfo", JSON.stringify(backendInfo));
@@ -46,7 +58,6 @@ export default function Trajectory(props) {
   const negSemiMajor = math.subtract([0, 0, 0], semiMajor);
   const negSemiMinor = math.subtract([0, 0, 0], semiMinor);
 
-  console.log(math.add(semiMinor, negSemiMajor));
   return (
     <>
       <CubicBezierLine

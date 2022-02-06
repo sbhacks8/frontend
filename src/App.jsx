@@ -1,25 +1,19 @@
-import React, { Suspense, useState, useRef } from "react";
+import React, { Suspense, useEffect, useState, useRef } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
-import { OrbitControls, useGLTF, Text, Stars } from "@react-three/drei";
+import {
+  OrbitControls,
+  useGLTF,
+  Text,
+  Stars,
+  Dodecahedron,
+  CameraShake,
+} from "@react-three/drei";
 import "./App.css";
 import Trajectory from "./components/Trajectory.jsx";
 import Overlay from "./components/Overlay.jsx";
-import { norm } from "./utils";
-
-function mult(array, v) {
-  return array.map((x) => x * v);
-}
-function rodrigues(theta, v, k) {
-  return math.add(
-    mult(v, Math.cos(theta)),
-    mult(math.cross(k, v), Math.sin(theta)),
-    mult(k, math.dot(k, v) * (1 - Math.cos(theta)))
-  );
-}
-
-function theta(time, period) {
-  return (2 * Math.PI * (time % period)) / period;
-}
+import { norm, eventEmitter, mult, rodrigues, theta } from "./utils";
+import { DateTime } from "luxon";
+import { Vector3 } from "three";
 
 function Earth(props) {
   const { scene } = useGLTF("earth.glb");
@@ -55,26 +49,78 @@ function Light() {
   });
 
   return (
-    <directionalLight ref={myLight} position={[-20, 30, 0]} intensity={0.7} />
+    <>
+      <directionalLight ref={myLight} position={[-20, 30, 0]} intensity={0.7} />
+      <ambientLight intensity={0.03} />
+    </>
   );
 }
 
 function Meetings() {
+  const [thetaMeeting, setTheta] = useState(0.8458134067357136); // more flub, theta offset from beginning
+
+  const [numUpdates, setNumUpdates] = useState(0); // more flub, theta offset from beginning
   const [meetings, _] = useState(() => {
-    const saved = localStorage.getItem("name");
-    const initialValue = JSON.parse(saved);
-    return initialValue || "";
+    const saved = localStorage.getItem("backendInfo");
+    const backend = JSON.parse(saved);
+    const meetings = backend["meetings"];
+    //! this is flub, rm for actual later
+    for (let meeting of meetings) {
+      meeting.theta = theta(meeting.time, backend["flubbedPeriod"]);
+      meeting.time = DateTime.local().ts / 1000 + meeting.time;
+
+      let pos = math.add(
+        mult(backend["semiMajor"], Math.cos(meeting.theta)),
+        mult(backend["semiMinor"], Math.sin(meeting.theta))
+      );
+      meeting.position = mult(pos, 0.82);
+    }
+
+    return meetings || "";
   });
-  return (
-    <div>
-      {meetings.map((meeting, i) => {
-        // calculate theta, find x, y, z from theta and trajectory
-        // make on click effect -> add html element
-        // animate time
-        <div> {i}</div>;
-      })}
-    </div>
-  );
+  useFrame(({ camera }, dt) => {
+    const saved = localStorage.getItem("backendInfo");
+    const backend = JSON.parse(saved);
+
+    let pos = math.add(
+      mult(backend["semiMajor"], Math.cos(thetaMeeting)),
+      mult(backend["semiMinor"], Math.sin(thetaMeeting))
+    );
+    pos = mult(pos, 5);
+    if (numUpdates < 500) {
+      camera.position.lerp(new Vector3(...pos), 0.05);
+      camera.lookAt(new Vector3(0, 0, 0));
+      camera.updateProjectionMatrix();
+      setNumUpdates(numUpdates + 1);
+    }
+  });
+  if (meetings) {
+    return (
+      <>
+        {meetings.map((meeting, i) => {
+          // calculate theta, find x, y, z from theta and trajectory
+          // make on click effect -> add html element
+          // animate time
+          // console.log(meeting.position);
+          return (
+            <Dodecahedron
+              onClick={() => {
+                setTheta(meeting.theta);
+                eventEmitter.emit("newMeeting", meeting);
+                setNumUpdates(0);
+              }}
+              key={i}
+              position={meeting.position}
+            >
+              <meshPhongMaterial attach="material" color="#D8BE99" />
+            </Dodecahedron>
+          );
+        })}
+      </>
+    );
+  } else {
+    return null;
+  }
 }
 export default function App() {
   const overlay = useRef();
@@ -88,8 +134,10 @@ export default function App() {
         <OrbitControls />
         <Stars />
         <Suspense fallback={null}>
-          <Trajectory />
-          <Meetings />
+          <group>
+            <Trajectory />
+            <Meetings />
+          </group>
           <Earth />
           <Light />
         </Suspense>
