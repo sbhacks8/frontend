@@ -4,11 +4,13 @@
   "scripts": {
     "dev": "run-p server start",
     "server": "node-env-run server --exec nodemon | pino-colada",
+    "dev2": "concurrently 'npm start' 'cd api && npm start' ",
     "start": "vite",
     "build": "vite build",
     "preview": "vite preview"
   },
   "dependencies": {
+    "@auth0/auth0-react": "^1.9.0",
     "@esbuild-plugins/node-globals-polyfill": "^0.1.1",
     "@esbuild-plugins/node-modules-polyfill": "^0.1.4",
     "@react-three/drei": "^8.8.1",

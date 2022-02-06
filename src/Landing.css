@@ -1,0 +1,20 @@
+.Auth{
+    background-color: rgba(0, 0, 0, 0.7);
+    border-radius: 15px;
+    border: solid 3px; 
+    background-position: center;
+    -webkit-animation: 3s ease 0s normal forwards 1 fadein;
+    animation: 3s ease 0s normal forwards 1 fadein;
+  }
+  
+  @keyframes fadein{
+    0% { opacity:0; }
+    66% { opacity:0; }
+    100% { opacity:1; }
+  }
+  
+  @-webkit-keyframes fadein{
+    0% { opacity:0; }
+    66% { opacity:0; }
+    100% { opacity:1; }
+  }
