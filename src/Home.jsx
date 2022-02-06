@@ -1,13 +1,6 @@
-import React, { Suspense, useEffect, useState, useRef } from "react";
+import React, { Suspense, useState, useRef } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
-import {
-  OrbitControls,
-  useGLTF,
-  Text,
-  Stars,
-  Dodecahedron,
-  CameraShake,
-} from "@react-three/drei";
+import { OrbitControls, useGLTF, Stars, Dodecahedron } from "@react-three/drei";
 import "./App.css";
 import Trajectory from "./components/Trajectory.jsx";
 import Overlay from "./components/Overlay.jsx";
@@ -122,7 +115,7 @@ function Meetings() {
     return null;
   }
 }
-export default function App() {
+export default function Home() {
   const overlay = useRef();
   return (
     <>

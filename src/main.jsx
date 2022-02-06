@@ -1,14 +1,23 @@
 import { Settings } from "luxon";
 import React from "react";
 import ReactDOM from "react-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import "./index.css";
-import App from "./App";
+import "./App.css";
+import Home from "./Home";
 
 Settings.defaultZoneName = "London/Greenwich";
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <Router>
+      <Routes>
+        {/* <Route exact path="/" element={<Landing />}></Route> */}
+        <Route path="/home" element={<Home />}></Route>
+        {/* <Route path="/video" element={<Calling />}></Route> */}
+      </Routes>
+    </Router>
+    {/* <App /> */}
   </React.StrictMode>,
   document.getElementById("root")
 );
