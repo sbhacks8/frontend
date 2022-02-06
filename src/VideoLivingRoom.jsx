@@ -43,7 +43,7 @@ export default function VideoLivingRoom() {
           <Intro start={ready && clicked} set={setReady} />
         </Suspense>
       </Canvas>
-      <OverlayStart {...store} videoPlayer={ref} />
+      <OverlayStart {...store} />
     </>
   );
 }

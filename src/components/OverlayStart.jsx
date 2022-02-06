@@ -1,5 +1,5 @@
 import React from "react";
-export default function OverlayStart({ ready, clicked, setClicked, videoPlayer }) {
+export default function OverlayStart({ ready, clicked, setClicked }) {
   return (
     <>
       <div
@@ -10,7 +10,6 @@ export default function OverlayStart({ ready, clicked, setClicked, videoPlayer }
         <div
           onClick={() => {
             ready && setClicked(true);
-            //  videoPlayer.current.image.play()
           }}
         >
           {!ready ? "loading" : "click to continue"}

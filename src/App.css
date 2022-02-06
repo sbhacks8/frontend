@@ -52,10 +52,27 @@ body,
 .fullscreen.notready {
   color: #606060;
 }
-.fullscreen > div{
+.screen {
+  position: relative;
+  bottom: 69;
+  width: 30vw;
+  height: 40%;
+  top: -520px;
+  right: 120px;
+}
+.fullscreen > div {
   color: white;
   font-weight: 300;
 }
+.fullscreen.ready > div {
+  cursor: pointer;
+}
+
+.fullscreen.clicked {
+  pointer-events: none;
+  opacity: 0;
+}
+
 .overlay {
   top: 0;
   left: 0;
