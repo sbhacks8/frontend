@@ -1,5 +1,6 @@
 * {
   box-sizing: border-box;
+  font-weight: 100;
 }
 
 .App-link {
@@ -14,6 +15,39 @@ body,
   margin: 0;
   padding: 0;
   overflow: hidden;
+  user-select: none;
+}
+
+.rc-slider {
+  width: 50% !important;
+  margin-top: 70vh;
+  margin-left: 10px;
+}
+.rc-slider-rail, .rc-slider-step, .rc-slider-track {
+  height: 1px !important;
+}
+.rc-slider-handle {
+  border: none !important;
+  margin-top: -6px !important;
+}
+.overlay {
+  top: 0;
+  left: 0;
+  position: absolute;
+  margin-top: 20px;
+  margin-left: 20px;
+}
+
+.hour {
+  font-size: 120px;
+}
+.date {
+  font-size: 24px;
+  font-weight: 300;
+}
+
+#root {
+  overflow: auto;
 }
 
 body {
@@ -21,6 +55,8 @@ body {
   color: white;
   background: #101010;
   user-select: none;
+  position: fixed;
+  overflow: hidden;
 }
 
 button {

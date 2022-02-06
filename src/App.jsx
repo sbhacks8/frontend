@@ -1,11 +1,10 @@
-import React, { Suspense, useState } from "react";
+import React, { Suspense, useState, useRef } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
-import { OrbitControls, useGLTF, Stars } from "@react-three/drei";
+import { OrbitControls, useGLTF, Text, Stars } from "@react-three/drei";
 import "./App.css";
 import Trajectory from "./components/Trajectory.jsx";
+import Overlay from "./components/Overlay.jsx";
 import { norm } from "./utils";
-
-const PERIOD = 100;
 
 function mult(array, v) {
   return array.map((x) => x * v);
@@ -47,7 +46,7 @@ function Light() {
   const b = [0, 0, -20];
   let planeVector = math.cross(a, b);
   norm(planeVector);
-  useFrame(({ clock }) => {
+  useFrame(({ camera, clock }) => {
     let newPos = rodrigues(theta(clock.getElapsedTime(), 100), a, planeVector);
 
     myLight.current.position.x = newPos[0];
@@ -60,7 +59,25 @@ function Light() {
   );
 }
 
+function Meetings() {
+  const [meetings, _] = useState(() => {
+    const saved = localStorage.getItem("name");
+    const initialValue = JSON.parse(saved);
+    return initialValue || "";
+  });
+  return (
+    <div>
+      {meetings.map((meeting, i) => {
+        // calculate theta, find x, y, z from theta and trajectory
+        // make on click effect -> add html element
+        // animate time
+        <div> {i}</div>;
+      })}
+    </div>
+  );
+}
 export default function App() {
+  const overlay = useRef();
   return (
     <>
       <Canvas
@@ -69,13 +86,15 @@ export default function App() {
         camera={{ position: [0, 0, 100], fov: 15 }}
       >
         <OrbitControls />
-        <Trajectory />
         <Stars />
         <Suspense fallback={null}>
+          <Trajectory />
+          <Meetings />
           <Earth />
           <Light />
         </Suspense>
       </Canvas>
+      <Overlay ref={overlay} />
     </>
   );
 }
