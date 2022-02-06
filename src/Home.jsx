@@ -4,7 +4,7 @@ import { OrbitControls, useGLTF, Stars, Dodecahedron } from "@react-three/drei";
 import "./App.css";
 import Trajectory from "./components/Trajectory.jsx";
 import Overlay from "./components/Overlay.jsx";
-import { norm, eventEmitter, mult, rodrigues, theta } from "./utils";
+import { norm, myeventemitter, mult, rodrigues, theta } from "./utils";
 import { DateTime } from "luxon";
 import { Vector3 } from "three";
 
@@ -99,7 +99,7 @@ function Meetings() {
             <Dodecahedron
               onClick={() => {
                 setTheta(meeting.theta);
-                eventEmitter.emit("newMeeting", meeting);
+                myeventemitter.emit("newMeeting", meeting);
                 setNumUpdates(0);
               }}
               key={i}

@@ -23,11 +23,11 @@ export function sum(array) {
   return array.reduce((partialSum, a) => partialSum + a, 0);
 }
 
-export const eventEmitter = {
+export const myeventemitter = {
   _events: {},
   emit(event, data) {
     if (!this._events[event]) return;
-    this._events[event].forEach(callback => callback(data))
+    this._events[event].forEach((callback) => callback(data));
   },
   on(event, callback) {
     if (!this._events[event]) this._events[event] = [];
@@ -36,5 +36,5 @@ export const eventEmitter = {
   unsubscribe(event) {
     if (!this._events[event]) return;
     delete this._events[event];
-  }
-}
+  },
+};

@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import "./index.css";
 import "./App.css";
 import Home from "./Home";
+import VideoLivingRoom from "./VideoLivingRoom";
 
 Settings.defaultZoneName = "London/Greenwich";
 
@@ -14,7 +15,7 @@ ReactDOM.render(
       <Routes>
         {/* <Route exact path="/" element={<Landing />}></Route> */}
         <Route path="/home" element={<Home />}></Route>
-        {/* <Route path="/video" element={<Calling />}></Route> */}
+        <Route path="/video" element={<VideoLivingRoom />}></Route>
       </Routes>
     </Router>
     {/* <App /> */}

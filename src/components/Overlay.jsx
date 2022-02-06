@@ -1,15 +1,12 @@
-import React, { forwardRef } from "react";
-import Slider, { Range } from "rc-slider";
-import "rc-slider/assets/index.css";
-import mitt from "mitt";
-import { eventEmitter } from "../utils";
+import React from "react";
+import { myeventemitter } from "../utils";
 
 class Overlay extends React.Component {
   constructor(props) {
     super(props);
     this.state = { meeting: null };
 
-    eventEmitter.on("newMeeting", (meeting) => {
+    myeventemitter.on("newMeeting", (meeting) => {
       this.setState({ meeting: meeting });
     });
   }
