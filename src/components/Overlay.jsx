@@ -23,7 +23,14 @@ class Overlay extends React.Component {
             <h1>{this.state.meeting.person}</h1>
             <h2>{this.state.meeting.time}</h2>
             <div>{this.state.meeting.description}</div>
-            <div className="join">Join Meeting</div>
+            <div
+              onClick={() => {
+                window.location.href = "/video";
+              }}
+              className="join"
+            >
+              Join Meeting
+            </div>
           </div>
         )}
         {/* <Slider className="slider"/> */}
