@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import "./index.css";
 import "./App.css";
 import Home from "./Home";
+import Landing from './Landing'
 import VideoLivingRoom from "./VideoLivingRoom";
 import { Auth0Provider } from '@auth0/auth0-react'
 
