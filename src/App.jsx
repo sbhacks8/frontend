@@ -1,45 +1,67 @@
-import { useState } from 'react'
-import logo from './logo.svg'
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import './App.css'
+import { useAuth0 } from '@auth0/auth0-react'
+import axios from "axios";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const {loginWithPopup, loginWithRedirect, logout, user, isAuthenticated, getAccessTokenSilently} = useAuth0()
+
+  function callApi() {
+    axios
+      .get("http://localhost:4000/")
+      .then(response => console.log(response.data))
+      .catch(error => console.log(error.message))
+  }
+  async function callProtectedApi() {
+    try {
+      const token = await getAccessTokenSilently();
+      const response = await axios.get("http://localhost:4000/protected", {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      })
+      console.log(response.data);
+    } catch (error) {
+        console.log(error.message);
+    }
+    // axios
+    //   .get("http://localhost:4000/protected")
+    //   .then(response => console.log(response.data))
+    //   .catch(error => console.log(error.message))
+  }
 
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>Hello Vite + React!</p>
-        <p>
-          <button type="button" onClick={() => setCount((count) => count + 1)}>
-            count is: {count}
-          </button>
-        </p>
-        <p>
-          Edit <code>App.jsx</code> and save to test HMR updates.
-        </p>
-        <p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-          {' | '}
-          <a
-            className="App-link"
-            href="https://vitejs.dev/guide/features.html"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Vite Docs
-          </a>
-        </p>
-      </header>
+      <h1>Timely</h1>
+      <ul>
+        <li>
+          <button onClick={loginWithPopup}>Login With Popup</button>
+        </li>
+        <li>
+          <button onClick={loginWithRedirect}>Login With Redirect</button>
+        </li>
+        <li>
+          <button onClick={logout}>Logout</button>
+        </li>
+      </ul>
+      <p>You are { isAuthenticated ? "Logged in" : "Logged Out"}</p>
+
+      <ul>
+        <li><button onClick={callApi}>Call API</button></li>
+        <li><button onClick={callProtectedApi}>Call Protected API</button></li>
+      </ul>
+
+      { isAuthenticated && (<pre styled={{ textAlign: 'start' }}>{JSON.stringify(user, null, 2)}</pre> )}
+
+      {/* <Router>
+        <Routes>
+          <Route exact path="/" element={<Landing />}></Route>
+          <Route path="/home" element={<Home />}></Route>
+          <Route path="/detail/:id" element={<Calling />}></Route>
+        </Routes>
+      </Router> */}
     </div>
   )
-}
+};
 
 export default App
