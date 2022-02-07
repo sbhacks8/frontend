@@ -10,9 +10,15 @@ import VideoLivingRoom from "./VideoLivingRoom";
 
 Settings.defaultZoneName = "London/Greenwich";
 
+let BASENAME = "";
+if (import.meta.env.BASE_URL == "/frontend/") {
+  BASENAME = "/frontend";
+} else {
+  BASENAME = "/";
+}
 ReactDOM.render(
   <React.StrictMode>
-    <Router>
+    <Router basename={BASENAME}>
       <Routes>
         <Route exact path="/" element={<Landing />}></Route>
         <Route path="/home" element={<Home />}></Route>

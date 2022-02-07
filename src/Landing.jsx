@@ -8,6 +8,7 @@ import { Canvas, useFrame } from "@react-three/fiber";
 import { useGLTF, Stars } from "@react-three/drei";
 import { softShadows } from "@react-three/drei";
 import { Loader } from "@react-three/drei";
+import { useNavigate } from "react-router-dom";
 
 import "./App.css";
 
@@ -76,16 +77,12 @@ function Light() {
 }
 
 function Landing(props) {
+  const navigate = useNavigate();
   return (
     <>
       <div className="Auth">
         <h1 className="title">Timely</h1>
-        <button
-          className="login-button"
-          onClick={() => {
-            window.location.href = "/home";
-          }}
-        >
+        <button className="login-button" onClick={() => navigate("/home")}>
           Login
         </button>
       </div>

@@ -1,5 +1,14 @@
 import React from "react";
 import { myeventemitter } from "../utils";
+import { useNavigate } from "react-router";
+
+const withRouter = (Component) => {
+  const Wrapper = React.forwardRef((props, ref) => {
+    const navigate = useNavigate();
+    return <Component navigate={navigate} forwardRef={ref} {...props} />;
+  });
+  return Wrapper;
+};
 
 class Overlay extends React.Component {
   constructor(props) {
@@ -23,12 +32,7 @@ class Overlay extends React.Component {
             <h1>{this.state.meeting.person}</h1>
             <h2>{this.state.meeting.time}</h2>
             <div>{this.state.meeting.description}</div>
-            <div
-              onClick={() => {
-                window.location.href = "/video";
-              }}
-              className="join"
-            >
+            <div onClick={() => this.props.navigate("/video")} className="join">
               Join Meeting
             </div>
           </div>
@@ -38,4 +42,4 @@ class Overlay extends React.Component {
     );
   }
 }
-export default Overlay;
+export default withRouter(Overlay);
