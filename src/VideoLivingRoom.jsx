@@ -3,7 +3,6 @@ import React, { Suspense, useEffect, useState, useRef } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { Html, useGLTF } from "@react-three/drei";
 import OverlayStart from "./components/OverlayStart";
-import VideoChat from "./components/Videochat";
 
 function LivingRoom(props) {
   const { scene } = useGLTF("livingroom.glb");
@@ -31,11 +30,11 @@ export default function VideoLivingRoom() {
               position={[-1, 3.5, 9]}
               scale={[0.15, 0.15, 0.15]}
             />
-            <Html>
+            {/* <Html>
               <div className={"screen"}>
                 <VideoChat />
               </div>
-            </Html>
+            </Html> */}
           </group>
           <ambientLight intensity={0.5} />
           <spotLight position={[0, 10, 0]} intensity={0.3} />
